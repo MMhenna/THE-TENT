@@ -32,8 +32,8 @@ if (firebase.apps.length === 0) {
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import LandingScreen from './components/auth/Landing'
-import RegisterScreen from './components/auth/Register';
+import  LandingScreen  from './components/auth/Landing'
+import  RegisterScreen  from './components/auth/Register';
 
 const Stack = createStackNavigator;
 
@@ -59,8 +59,10 @@ export class App extends Component {
       }
     })
   }
+
   render() {
     const { loggedIn, loaded } = this.state;
+
     if (!loaded) {
       return (
         <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -68,6 +70,7 @@ export class App extends Component {
         </View>
       )
     }
+
     if (!loggedIn) {
       return (
         <NavigationContainer>
@@ -81,10 +84,10 @@ export class App extends Component {
 
       );
     }
-
+    
     return (
       <View style={{ flex: 1, justifyContent: 'center' }}>
-        <Text>user login</Text>
+        <Text>user is logged in</Text>
       </View>
     )
   }
