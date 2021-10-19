@@ -1,19 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { Component } from 'react';
+import { StatusBar } from "expo-status-bar";
+import React, { Component } from "react";
 
-import { View, Text } from 'react-native'
+import { View, Text } from "react-native";
 
-import firebase from 'firebase';
+import firebase from "firebase";
 
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import rootReducer from './redux/reducers'
-import thunk from 'redux-thunk';
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import rootReducer from "./redux/reducers";
+import thunk from "redux-thunk";
+
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
-
 const firebaseConfig = {
-
   apiKey: "AIzaSyD1a0YdjrIndEIMKuAdBlQy6itaMYuJGWE",
 
   authDomain: "the-tent-5a04f.firebaseapp.com",
@@ -26,30 +25,29 @@ const firebaseConfig = {
 
   appId: "1:598600014797:web:c5fc05ee5108901468c284",
 
-  measurementId: "G-BSBGDCLC8Z"
-
+  measurementId: "G-BSBGDCLC8Z",
 };
-
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
 }
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
-import LandingScreen from './components/auth/Landing'
-import RegisterScreen from './components/auth/Register';
-import MainScreen from './components/Main';
+import LandingScreen from "./components/auth/Landing";
+import RegisterScreen from "./components/auth/Register";
+import LoginScreen from "./components/auth/Login";
+import MainScreen from "./components/Main";
 
 const Stack = createStackNavigator();
 
 export class App extends Component {
   constructor(props) {
-    super()
+    super();
     this.state = {
       loaded: false,
-    }
+    };
   }
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -57,14 +55,14 @@ export class App extends Component {
         this.setState({
           loggedIn: false,
           loaded: true,
-        })
+        });
       } else {
         this.setState({
           loggedIn: true,
           loaded: true,
-        })
+        });
       }
-    })
+    });
   }
 
   render() {
@@ -72,35 +70,41 @@ export class App extends Component {
 
     if (!loaded) {
       return (
-        <View style={{ flex: 1, justifyContent: 'center' }}>
+        <View style={{ flex: 1, justifyContent: "center" }}>
           <Text>Loading</Text>
         </View>
-      )
+      );
     }
 
     if (!loggedIn) {
       return (
         <NavigationContainer>
           <Stack.Navigator initiaRouteName="Landing">
-
-            <Stack.Screen name="Landing" component={LandingScreen} options={{ headerShown: false }} />
+            <Stack.Screen
+              name="Landing"
+              component={LandingScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />
-
           </Stack.Navigator>
         </NavigationContainer>
-
-      )
+      );
     }
     return (
       <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator initiaRouteName="Main">
-            <Stack.Screen name="Main" component={MainScreen} options={{ headerShown: false }} />
+            <Stack.Screen
+              name="Main"
+              component={MainScreen}
+              options={{ headerShown: false }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
-    )
+    );
   }
 }
 
-export default App
+export default App;
