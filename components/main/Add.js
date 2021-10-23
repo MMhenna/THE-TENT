@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
 } from "react-native";
+import * as ImagePicker from 'expo-image-picker';
 
 import { AppStyles } from "../../AppStyles";
 
