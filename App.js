@@ -52,7 +52,7 @@ export class App extends Component {
       loaded: false,
     };
   }
-  componentDidMount() {
+  componentDidMount() {   
     firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
         this.setState({
