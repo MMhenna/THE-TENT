@@ -32,6 +32,8 @@ if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
 }
 
+export const auth = firebase.auth();
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -39,6 +41,7 @@ import LandingScreen from "./components/auth/Landing";
 import RegisterScreen from "./components/auth/Register";
 import LoginScreen from "./components/auth/Login";
 import MainScreen from "./components/Main";
+import ChatScreen from "./components/main/Chat";
 
 const Stack = createStackNavigator();
 
@@ -99,6 +102,10 @@ export class App extends Component {
               name="Main"
               component={MainScreen}
               options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Chat"
+              component={ChatScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>
