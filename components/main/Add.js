@@ -11,6 +11,19 @@ import * as ImagePicker from 'expo-image-picker';
 import { AppStyles } from "../../AppStyles";
 
 export default function Add() {
+
+    let openImagePickerAsync = async () => {
+        let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    
+        if (permissionResult.granted === false) {
+          alert("Permission to access camera roll is required!");
+          return;
+        }
+    
+        let pickerResult = await ImagePicker.launchImageLibraryAsync();
+        console.log(pickerResult);
+      }
+      
   return (
     <View style={styles.container}>
       <View style={styles.InputContainer}>
