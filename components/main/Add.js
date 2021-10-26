@@ -10,47 +10,52 @@ import {
   Button,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import DateField from "react-native-datefield";
 
 import { AppStyles } from "../../AppStyles";
 
 export default function Add() {
-  const [imageUri, setimageUri] = useState([]);
+  const [image, setimage] = useState(null);
 
-  const selectImage = async () => {
+  useEffect(async () => {
     let permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
+      alert("Permission to access library is required!");
       return;
     }
+  }, []);
+  const selectImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      // mediaTypes: ImagePicker.MediaTypeOptions.All(),
+      // allowsEditing:true,
+      // aspect:[4,3],
+      // quality:1
+    });
+    console.log(result);
 
-    let pickerResult = await ImagePicker.launchImageLibraryAsync();
-    console.log(pickerResult);
-
-    if (!pickerResult.cancelled) {
-      setimageUri = (pickerResult.uri);
+    if (!result.cancelled) {
+      setimage(result.uri);
     }
-
-
   };
-
-  
 
   return (
     <View style={styles.container}>
       <Button title="Select Image" onPress={selectImage} />
-      {<Image source={{uri:imageUri}} styles={{width:200, height:200}}/>}
+      {image && (
+        <Image source={{ uri: image }} styles={{ width: 200, height: 200 }} />
+      )}
       <View style={styles.InputContainer}>
         <TextInput
           style={styles.body}
           placeholder="Place"
-          onChangeText={() => this.setState({})}
+          onChangeText={(place) => this.setState({place})}
           placeholderTextColor={AppStyles.color.grey}
           underlineColorAndroid="transparent"
         />
       </View>
-      <View style={styles.InputContainer}>
+      {/* <View style={styles.InputContainer}>
         <TextInput
           style={styles.body}
           placeholder="Date"
@@ -58,22 +63,47 @@ export default function Add() {
           placeholderTextColor={AppStyles.color.grey}
           underlineColorAndroid="transparent"
         />
+      </View> */}
+      <View style={styles.DateContainer}>
+        <DateField
+          styleInput={styles.inputBorder}
+          onSubmit={(value) => console.log(value)}
+        />
+
+        {/* <DateField
+        labelDate="Input date"
+        labelMonth="Input month"
+        labelYear="Input year"
+        defaultValue={new Date()}
+        styleInput={styles.inputBorder}
+        onSubmit={(value) => console.log(value)}
+      /> */}
+
+        {/* <DateField
+        editable={false}
+        styleInput={styles.inputBorder}
+        maximumDate={new Date(2023, 3, 10)}
+        minimumDate={new Date(2021, 4, 21)}
+        handleErrors={() => console.log("ERROR")}
+      /> */}
       </View>
       <View style={styles.InputContainer}>
         <TextInput
           style={styles.body}
           placeholder="Night "
           keyboardType="numeric"
-          onChangeText={() => this.setState({})}
+          onChangeText={(night) => this.setState({night})}
           placeholderTextColor={AppStyles.color.grey}
           underlineColorAndroid="transparent"
         />
       </View>
-      <View style={styles.InputContainer}>
+      <View style={styles.InputContainerArea}>
         <TextInput
           style={styles.body}
-          placeholder="Place"
-          onChangeText={() => this.setState({})}
+          multiline={true}
+          numberOfLines={200}
+          placeholder="Description"
+          onChangeText={(desc) => this.setState({desc})}
           placeholderTextColor={AppStyles.color.grey}
           underlineColorAndroid="transparent"
         />
@@ -86,6 +116,26 @@ export default function Add() {
 }
 
 const styles = StyleSheet.create({
+  InputContainerArea: {
+    width: AppStyles.textInputWidth.main,
+    height: 200,
+    marginTop: 30,
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: AppStyles.color.grey,
+    borderRadius: AppStyles.borderRadius.main,
+    textAlignVertical: 'top',
+  },
+  DateContainer: {
+    marginTop: 40,
+  },
+  inputBorder: {
+    width: "30%",
+    borderRadius: 8,
+    borderColor: "#cacaca",
+    borderWidth: 1,
+    marginBottom: 20,
+  },
   container: {
     flex: 1,
     alignItems: "center",
