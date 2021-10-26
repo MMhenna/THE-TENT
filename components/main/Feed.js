@@ -5,7 +5,7 @@ import cardPost from './cardPost'
 export default function Feed() {
     return (
         <View>
-            <Text>{ cardPost }</Text>
+            {cardPost}
         </View>
     )
 }

@@ -29,11 +29,10 @@ export default function Add() {
     console.log(pickerResult);
 
     if (!pickerResult.cancelled) {
-      setimageUri = (pickerResult.Uri);
+      setimageUri = (pickerResult.uri);
     }
 
 
-    
   };
 
   
@@ -41,7 +40,7 @@ export default function Add() {
   return (
     <View style={styles.container}>
       <Button title="Select Image" onPress={selectImage} />
-      <Image source={{ uri : imageUri}} styles={{width:200, height:200}}/>
+      {<Image source={{uri:imageUri}} styles={{width:200, height:200}}/>}
       <View style={styles.InputContainer}>
         <TextInput
           style={styles.body}
