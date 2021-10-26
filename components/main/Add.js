@@ -1,31 +1,42 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import {
   View,
+  Image,
   TextInput,
   TouchableOpacity,
   StyleSheet,
   Text,
+  Button,
 } from "react-native";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 
 import { AppStyles } from "../../AppStyles";
 
 export default function Add() {
+  const [imageUri, setimageUri] = useState([]);
 
-    let openImagePickerAsync = async () => {
-        let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    
-        if (permissionResult.granted === false) {
-          alert("Permission to access camera roll is required!");
-          return;
-        }
-    
-        let pickerResult = await ImagePicker.launchImageLibraryAsync();
-        console.log(pickerResult);
-      }
-      
+  const selectImage = async () => {
+    let permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+
+    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    console.log(pickerResult);
+  };
+
+  if (!pickerResult.cancelled) {
+    setimageUri = (pickerResult.Uri);
+  }
+
   return (
     <View style={styles.container}>
+      <Button title="Select Image" onPress={selectImage} />
+      <Image source={{ uri : imageUri}} styles={{width:200, height:200}}/>
       <View style={styles.InputContainer}>
         <TextInput
           style={styles.body}
@@ -64,7 +75,7 @@ export default function Add() {
         />
       </View>
       <TouchableOpacity style={styles.addContainer}>
-        <Text style={styles.addText} >add</Text>
+        <Text style={styles.addText}>add</Text>
       </TouchableOpacity>
     </View>
   );
