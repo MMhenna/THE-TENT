@@ -27,11 +27,16 @@ export default function Add() {
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
     console.log(pickerResult);
+
+    if (!pickerResult.cancelled) {
+      setimageUri = (pickerResult.Uri);
+    }
+
+
+    
   };
 
-  if (!pickerResult.cancelled) {
-    setimageUri = (pickerResult.Uri);
-  }
+  
 
   return (
     <View style={styles.container}>
@@ -49,7 +54,7 @@ export default function Add() {
       <View style={styles.InputContainer}>
         <TextInput
           style={styles.body}
-          placeholder=""
+          placeholder="Date"
           onChangeText={() => this.setState({})}
           placeholderTextColor={AppStyles.color.grey}
           underlineColorAndroid="transparent"

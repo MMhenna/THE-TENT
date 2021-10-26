@@ -49,7 +49,7 @@ export const UserInfoText = styled(View)`
 export const UserName = styled(Text)`
   font-size: 14px;
   font-weight: bold;
-  font-family: 'Lato-Regular';
+  /* font-family: 'Lato-Regular'; */
 `;
 
 export const PostTime = styled(Text)`

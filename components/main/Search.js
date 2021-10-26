@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, Text, TextInput, FlatList, TouchableOpacity } from 'react-native'
 
 import firebase from 'firebase';
-require( 'firebase/firebase' )
+require( 'firebase/firestore' )
 
 export default function Search(props) {
 	const [users, setUsers] = useState([])

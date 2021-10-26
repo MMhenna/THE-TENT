@@ -80,7 +80,7 @@ function Profile(props) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        mariginTop: 40
+        marginTop: 40
     },
     containerInfo: {
         margin: 20

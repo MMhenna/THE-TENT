@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
-export const Container = styled.View`
+export const Container = (styled.view)`
   flex: 1;
   align-items: center;
   background-color: #fff;
   padding: 20px;
 `;
 
-export const Card = styled.View`
+export const Card = (styled.view)`
     background-color: #f8f8f8;
     width: 100%;
     margin-bottom: 20px;

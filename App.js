@@ -3,7 +3,8 @@ import React, { Component } from "react";
 
 import { View, Text } from "react-native";
 
-import firebase from "firebase";
+import * as firebase from "firebase";
+import "firebase/firestore";
 
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
@@ -52,7 +53,7 @@ export class App extends Component {
       loaded: false,
     };
   }
-  componentDidMount() {   
+  componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
         this.setState({
@@ -103,10 +104,7 @@ export class App extends Component {
               component={MainScreen}
               options={{ headerShown: false }}
             />
-            <Stack.Screen
-              name="Chat"
-              component={ChatScreen}
-            />
+            <Stack.Screen name="Chat" component={ChatScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
