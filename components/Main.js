@@ -14,6 +14,7 @@ import AddScreen from "./main/Add";
 import ProfileScreen from "./main/Profile";
 import cardPost from "./main/cardPost";
 import Search from "./main/Search"
+import firebase  from 'firebase'
 
 const Tab = createBottomTabNavigator();
 
