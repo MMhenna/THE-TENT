@@ -11,11 +11,20 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import DateField from "react-native-datefield";
+import DatePicker from "react-native-date-picker";
+
+import firebase from "firebase";
+require("firebase/firestore");
+require("firebase/firebase-storage");
 
 import { AppStyles } from "../../AppStyles";
 
 export default function Add() {
   const [image, setimage] = useState(null);
+  const [place, setPlace] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [night, setNight] = useState("");
+  const [desc, setDesc] = useState("");
 
   useEffect(async () => {
     let permissionResult =
@@ -40,6 +49,54 @@ export default function Add() {
     }
   };
 
+  const uploadImage = async () => {
+    const childPath = `post/${
+      firebase.auth().currentUser.uid
+    }/${Math.random().toString(36)}`;
+    console.log(childPath);
+
+    const response = await fetch(image);
+    const blob = await response.blob();
+
+    const task = firebase.storage().ref().child(childPath).put(blob);
+
+    const taskProgress = (snapshot) => {
+      console.log(`transferred: ${snapshot.bytesTransferred}`);
+    };
+
+    const taskCompleted = () => {
+      task.snapshot.ref.getDownloadURL().then((snapshot) => {
+        savePostData(snapshot);
+        console.log(snapshot);
+      });
+    };
+
+    const taskError = (snapshot) => {
+      console.log(snapshot);
+    };
+
+    task.on("state_changed", taskProgress, taskError, taskCompleted);
+  };
+
+  const savePostData = (downloadURL) => {
+    firebase
+      .firestore()
+      .collection("posts")
+      .doc(firebase.auth().currentUser.uid)
+      .collection("userPosts")
+      .add({
+        downloadURL,
+        place,
+        date,
+        night,
+        desc,
+        creation: firebase.firestore.FieldValue.serverTimestamp(),
+      })
+      .then(function () {
+        props.navigation.popToTop();
+      });
+  };
+
   return (
     <View style={styles.container}>
       <Button title="Select Image" onPress={selectImage} />
@@ -50,7 +107,7 @@ export default function Add() {
         <TextInput
           style={styles.body}
           placeholder="Place"
-          onChangeText={(place) => this.setState({place})}
+          onChangeText={(place) => setPlace(place)}
           placeholderTextColor={AppStyles.color.grey}
           underlineColorAndroid="transparent"
         />
@@ -65,10 +122,13 @@ export default function Add() {
         />
       </View> */}
       <View style={styles.DateContainer}>
-        <DateField
+        <DatePicker date={date} onDateChange={setDate} />
+
+        {/* <DateField
           styleInput={styles.inputBorder}
           onSubmit={(value) => console.log(value)}
-        />
+          onChangeText={(date) => setDate(date)}
+        /> */}
 
         {/* <DateField
         labelDate="Input date"
@@ -92,7 +152,7 @@ export default function Add() {
           style={styles.body}
           placeholder="Night "
           keyboardType="numeric"
-          onChangeText={(night) => this.setState({night})}
+          onChangeText={(night) => setNight(night)}
           placeholderTextColor={AppStyles.color.grey}
           underlineColorAndroid="transparent"
         />
@@ -103,12 +163,15 @@ export default function Add() {
           multiline={true}
           numberOfLines={200}
           placeholder="Description"
-          onChangeText={(desc) => this.setState({desc})}
+          onChangeText={(desc) => setDesc(desc)}
           placeholderTextColor={AppStyles.color.grey}
           underlineColorAndroid="transparent"
         />
       </View>
-      <TouchableOpacity style={styles.addContainer}>
+      <TouchableOpacity
+        style={styles.addContainer}
+        onPress={() => uploadImage()}
+      >
         <Text style={styles.addText}>add</Text>
       </TouchableOpacity>
     </View>
@@ -124,7 +187,7 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderColor: AppStyles.color.grey,
     borderRadius: AppStyles.borderRadius.main,
-    textAlignVertical: 'top',
+    textAlignVertical: "top",
   },
   DateContainer: {
     marginTop: 40,
