@@ -10,8 +10,11 @@ import {
   Button,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import DateField from "react-native-datefield";
-import DatePicker from "react-native-date-picker";
+import DatePicker from 'react-native-date-picker'
+
+import NumberPlease from "react-native-number-please";
+
+
 
 import firebase from "firebase";
 require("firebase/firestore");
@@ -22,9 +25,12 @@ import { AppStyles } from "../../AppStyles";
 export default function Add() {
   const [image, setimage] = useState(null);
   const [place, setPlace] = useState("");
-  const [date, setDate] = useState(new Date());
+  
   const [night, setNight] = useState("");
   const [desc, setDesc] = useState("");
+  const [open, setOpen] = useState(false)
+
+  
 
   useEffect(async () => {
     let permissionResult =
@@ -112,6 +118,31 @@ export default function Add() {
           underlineColorAndroid="transparent"
         />
       </View>
+
+      <Button title="Open" onPress={() => setOpen(true)} />
+      <DatePicker
+        modal
+        open={open}
+        date={date}
+        onConfirm={(date) => {
+          setOpen(false)
+          setDate(date)
+        }}
+        onCancel={() => {
+          setOpen(false)
+        }}
+        />
+
+        
+
+      {/* <TextInputMask
+        type={"datetime"}
+        options={{
+          format: "MM/DD/YYYY",
+        }}
+        // value={this.state.dt}
+        onChangeText={(date) => setDate(date)}
+      /> */}
       {/* <View style={styles.InputContainer}>
         <TextInput
           style={styles.body}
@@ -121,16 +152,23 @@ export default function Add() {
           underlineColorAndroid="transparent"
         />
       </View> */}
-      <View style={styles.DateContainer}>
-        <DatePicker date={date} onDateChange={setDate} />
+      {/* <View style={styles.DateContainer}> */}
+      {/* <TextInputMask
+	// refInput={(ref) => this.myDateText = ref}
+	type={'money'}
+	style={styles.input}
+	customTextInput={Textfield}
+	placeholder="Enter text to see events"
+/> */}
+      {/* <DatePicker mode="date" date={date} onDateChange={setDate} /> */}
 
-        {/* <DateField
+      {/* <DateField
           styleInput={styles.inputBorder}
           onSubmit={(value) => console.log(value)}
           onChangeText={(date) => setDate(date)}
         /> */}
 
-        {/* <DateField
+      {/* <DateField
         labelDate="Input date"
         labelMonth="Input month"
         labelYear="Input year"
@@ -139,14 +177,14 @@ export default function Add() {
         onSubmit={(value) => console.log(value)}
       /> */}
 
-        {/* <DateField
+      {/* <DateField
         editable={false}
         styleInput={styles.inputBorder}
         maximumDate={new Date(2023, 3, 10)}
         minimumDate={new Date(2021, 4, 21)}
         handleErrors={() => console.log("ERROR")}
       /> */}
-      </View>
+      {/* </View> */}
       <View style={styles.InputContainer}>
         <TextInput
           style={styles.body}
@@ -206,7 +244,7 @@ const styles = StyleSheet.create({
   or: {
     color: "black",
     marginTop: 40,
-    marginBottom: 10,
+    marginBottom: 10,setBirtday
   },
   title: {
     fontSize: AppStyles.fontSize.title,
