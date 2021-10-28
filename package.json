@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
@@ -47,3 +48,52 @@
   },
   "private": true
 }
+=======
+{
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject"
+  },
+  "dependencies": {
+    "@react-native-community/masked-view": "^0.1.11",
+    "@react-native-masked-view/masked-view": "0.2.5",
+    "@react-navigation/bottom-tabs": "^6.0.9",
+    "@react-navigation/native": "^6.0.6",
+    "@react-navigation/stack": "^6.0.11",
+    "expo": "^43.0.0",
+    "expo-dev-client": "~0.6.3",
+    "expo-image-picker": "~11.0.3",
+    "expo-status-bar": "~1.1.0",
+    "firebase": "8.2.3",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-native": "0.64.2",
+    "react-native-date-input": "^1.0.11",
+    "react-native-date-picker": "^4.1.1",
+    "react-native-datefield": "^0.3.5",
+    "react-native-gesture-handler": "~1.10.2",
+    "react-native-gifted-chat": "^0.16.3",
+    "react-native-mask-input": "^1.0.4",
+    "react-native-masked-text": "^1.13.0",
+    "react-native-material-cards": "^1.0.16",
+    "react-native-number-please": "^1.0.5",
+    "react-native-screens": "~3.8.0",
+    "react-native-styled-components": "^2.1.0",
+    "react-native-vector-icons": "^8.1.0",
+    "react-native-web": "0.17.1",
+    "react-redux": "^7.2.5",
+    "redux": "^4.1.1",
+    "redux-thunk": "^2.3.0",
+    "styled-components": "^5.3.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@types/firebase": "^3.2.1"
+  },
+  "private": true
+}
+>>>>>>> a9c627af4405eb6e71205b8581e2f463a31d4ab7
