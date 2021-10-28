@@ -9,10 +9,11 @@ import {
   Text,
   Button,
 } from "react-native";
-import * as ImagePicker from "expo-image-picker";
-import DatePicker from 'react-native-date-picker'
 
-import NumberPlease from "react-native-number-please";
+import * as ImagePicker from "expo-image-picker";
+import DatePicker from "react-datepicker";
+import { StackActions } from '@react-navigation/native';
+
 
 
 
@@ -25,7 +26,8 @@ import { AppStyles } from "../../AppStyles";
 export default function Add() {
   const [image, setimage] = useState(null);
   const [place, setPlace] = useState("");
-  
+  const [startDate, setStartDate] = useState(new Date());
+
   const [night, setNight] = useState("");
   const [desc, setDesc] = useState("");
   const [open, setOpen] = useState(false)
@@ -93,13 +95,14 @@ export default function Add() {
       .add({
         downloadURL,
         place,
-        date,
+        startDate,
         night,
         desc,
         creation: firebase.firestore.FieldValue.serverTimestamp(),
       })
       .then(function () {
-        props.navigation.popToTop();
+        console.log("added succfuly")
+
       });
   };
 
@@ -120,18 +123,8 @@ export default function Add() {
       </View>
 
       <Button title="Open" onPress={() => setOpen(true)} />
-      <DatePicker
-        modal
-        open={open}
-        date={date}
-        onConfirm={(date) => {
-          setOpen(false)
-          setDate(date)
-        }}
-        onCancel={() => {
-          setOpen(false)
-        }}
-        />
+      <DatePicker  selected={startDate} onChange={(date) => setStartDate(date)} />
+
 
         
 
@@ -241,11 +234,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
-  or: {
-    color: "black",
-    marginTop: 40,
-    marginBottom: 10,setBirtday
-  },
+   or: {
+     color: "black",
+     marginTop: 40,
+     marginBottom: 10,
+   },
   title: {
     fontSize: AppStyles.fontSize.title,
     fontWeight: "bold",
@@ -312,3 +305,4 @@ const styles = StyleSheet.create({
     color: AppStyles.color.white,
   },
 });
+

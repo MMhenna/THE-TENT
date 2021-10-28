@@ -52,7 +52,7 @@ function Profile(props) {
     }
 
     if(user === null){
-        return <View/>
+        return <Text>Please Login First</Text>
     }
     return (
         <View styles={styles.container}>
@@ -81,6 +81,7 @@ function Profile(props) {
                         </View>
                     )}
                 />
+
             </View>
         </View>
     )
