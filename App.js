@@ -46,7 +46,7 @@ import ChatScreen from "./components/main/Chat";
 
 const Stack = createStackNavigator();
 
-export class App extends Component {
+class App extends Component {
   constructor(props) {
     super();
     this.state = {
